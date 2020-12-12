@@ -35,9 +35,10 @@ INSERT INTO grades (Last_name, First_name, SSN, Test1, Test2, Test3, Test4, Fina
 CREATE TABLE IF NOT EXISTS login (
     `firstname` VARCHAR(50),
     `lastname` VARCHAR(50),
+    `email` VARCHAR(50) UNIQUE,
     `username` VARCHAR(50) UNIQUE,
     `password` VARCHAR(50)
 );
 
-INSERT INTO login (firstname, lastname, username, password) VALUES ('Super', 'User', 'admin','abc1234'),
-                                                                   ('Karan','Ramani','karanramani', 'password');
+INSERT INTO login (firstname, lastname, email, username, password) VALUES ('Super', 'User','ramanikaran@gmail.com', 'admin','abc1234'),
+                                                                   ('Karan','Ramani','kjr27@njit.edu','karanramani', 'password');
