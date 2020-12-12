@@ -15,7 +15,7 @@ service.
     * Application running on web server (Using Docker)
     * View Database content on webserver's webpage
     * Edit Database content from browser side interface.
-    * Delete Database entries.
+    * Delete Database entries from browser side interface.
     * Add entries to Database from browser side.
     * Flask App is enabled for testing GET, POST, PUT, DELETE methods on Postman services.
     
