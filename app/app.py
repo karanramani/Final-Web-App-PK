@@ -132,5 +132,21 @@ def api_delete(grades_id) -> str:
     resp = Response(status=200, mimetype='application/json')
     return resp
 
+# Final Assignment features *Karan Ramani*
+# Login sessions
+@app.route('/grades/new-user', methods=['GET'])
+def form_insert_get_user():
+    return render_template('new-user.html', title='New User Form')
+
+@app.route('/grades/new-user', methods=['POST'])
+def form_insert_post_user():
+    cursor = mysql.get_db().cursor()
+    inputData = (
+    request.form.get('Fname'), request.form.get('Lname'), request.form.get('username'), request.form.get('password'))
+    sql_insert_query = """INSERT INTO login (firstname, lastname, username, password) VALUES (%s, %s,%s, %s) """
+    cursor.execute(sql_insert_query, inputData)
+    mysql.get_db().commit()
+    return redirect("/", code=302)
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
