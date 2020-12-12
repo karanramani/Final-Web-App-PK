@@ -142,8 +142,8 @@ def form_insert_get_user():
 def form_insert_post_user():
     cursor = mysql.get_db().cursor()
     inputData = (
-    request.form.get('Fname'), request.form.get('Lname'), request.form.get('username'), request.form.get('password'))
-    sql_insert_query = """INSERT INTO login (firstname, lastname, username, password) VALUES (%s, %s,%s, %s) """
+    request.form.get('Fname'), request.form.get('Lname'), request.form.get('username'), request.form.get('password'), request.form.get('email'))
+    sql_insert_query = """INSERT INTO login (firstname, lastname, username, password, email) VALUES (%s, %s,%s, %s, %s) """
     cursor.execute(sql_insert_query, inputData)
     mysql.get_db().commit()
     return redirect("/", code=302)
