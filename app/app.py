@@ -155,11 +155,17 @@ def homepage():
 #login session by identifying the user inputs
 @app.route('/grades/login', methods=['POST'])
 def do_admin_login():
-    if request.form['password'] == 'password' and request.form['username'] == 'admin':
+    password = request.form['password']
+    username = request.form['username']
+    cursor = mysql.get_db().cursor()
+    cursor.execute('SELECT * FROM login WHERE username = %s AND password = %s', (username, password))
+    userprofile = cursor.fetchone()
+    if userprofile:
         session['logged_in'] = True
     else:
         flash('wrong password!')
-    return homepage()
+        return homepage()
+
 
 #new user creation session
 @app.route('/grades/new-user', methods=['GET'])

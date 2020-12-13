@@ -33,12 +33,14 @@ INSERT INTO grades (Last_name, First_name, SSN, Test1, Test2, Test3, Test4, Fina
 ('Heffalump','Harvey','632-79-9439',30.0,1.0,20.0,30.0,40.0,'C');
 
 CREATE TABLE IF NOT EXISTS login (
+    `id` int auto_increment,
     `firstname` VARCHAR(50),
     `lastname` VARCHAR(50),
     `email` VARCHAR(50) UNIQUE,
     `username` VARCHAR(50) UNIQUE,
-    `password` VARCHAR(50)
+    `password` VARCHAR(50),
+    primary key (`id`)
 );
 
-INSERT INTO login (firstname, lastname, email, username, password) VALUES ('Super', 'User','ramanikaran@gmail.com', 'admin','abc1234'),
+INSERT INTO login (firstname, lastname, email, username, password) VALUES ('Super', 'User','ramanikaran@gmail.com', 'admin','password'),
                                                                    ('Karan','Ramani','kjr27@njit.edu','karanramani', 'password');
