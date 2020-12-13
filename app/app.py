@@ -165,6 +165,7 @@ def do_admin_login():
     else:
         flash('wrong password!')
         return homepage()
+    return homepage()
 
 
 #new user creation session
