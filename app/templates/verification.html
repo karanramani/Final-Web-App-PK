@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block content %}
+<form action="/grades/verify" method="POST">
+     <div class="column" style="margin-top: 5%; background: white; padding: 5%; border-radius: 35px;">
+         <h5 class="card-title">
+              <div class="col" style="padding-bottom: 20px;">
+                <label for="verify-code">Verification Code</label>
+                <input id="verify-code" type="text" class="form-control" placeholder="Verification Code" name="verify-code" >
+            </div>
+         </h5>
+         <button type="submit" style="margin-top: 10%;margin-left: 47%;padding: 20px;font-size: 20px; background-color: #C38D9E;" class="btn btn-success">Submit</button>
+     </div>
+</form>
+{% endblock %}
