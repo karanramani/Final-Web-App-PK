@@ -1,9 +1,11 @@
 from typing import List, Dict
 import simplejson as json
-from flask import Flask, request, Response, redirect
+from flask import request, Response, redirect
 from flask import render_template
 from flaskext.mysql import MySQL
 from pymysql.cursors import DictCursor
+from flask import Flask, flash, redirect, session, abort
+import os
 
 app = Flask(__name__)
 mysql = MySQL(cursorclass=DictCursor)
@@ -15,14 +17,13 @@ app.config['MYSQL_DATABASE_PORT'] = 3306
 app.config['MYSQL_DATABASE_DB'] = 'gradesDataFinal'
 mysql.init_app(app)
 
-
-@app.route('/', methods=['GET'])
-def index():
-    user = {'username': 'Grades Project'}
-    cursor = mysql.get_db().cursor()
-    cursor.execute('SELECT * FROM grades')
-    result = cursor.fetchall()
-    return render_template('index.html', title='Home', user=user, grades=result)
+# @app.route('/', methods=['GET'])
+# def index():
+#     user = {'username': 'Grades Project'}
+#     cursor = mysql.get_db().cursor()
+#     cursor.execute('SELECT * FROM grades')
+#     result = cursor.fetchall()
+#     return render_template('index.html', title='Home', user=user, grades=result)
 
 
 @app.route('/view/<int:grades_id>', methods=['GET'])
@@ -54,7 +55,11 @@ def form_update_post(grades_id):
 
 @app.route('/grades/new', methods=['GET'])
 def form_insert_get():
-    return render_template('new.html', title='New Grades Form')
+    #checking if the session has a login valid, if valid then page gets loaded.
+    if not session.get('logged_in'):
+        return render_template('login.html')
+    if session.get('logged_in'):
+        return render_template('new.html', title='New Grades Form')
 
 @app.route('/grades/new', methods=['POST'])
 def form_insert_post():
@@ -134,10 +139,37 @@ def api_delete(grades_id) -> str:
 
 # Final Assignment features *Karan Ramani*
 # Login sessions
+
+#Below code makes login required to access the main page of the site
+@app.route('/')
+def homepage():
+    if not session.get('logged_in'):
+        return render_template('login.html')
+    if session.get('logged_in'):
+        user = {'username': 'Grades Project'}
+        cursor = mysql.get_db().cursor()
+        cursor.execute('SELECT * FROM grades')
+        result = cursor.fetchall()
+        return render_template('index.html', title='Home', user=user, grades=result)
+
+#login session by identifying the user inputs
+@app.route('/grades/login', methods=['POST'])
+def do_admin_login():
+    if request.form['password'] == 'password' and request.form['username'] == 'admin':
+        session['logged_in'] = True
+    else:
+        flash('wrong password!')
+    return homepage()
+
+#new user creation session
 @app.route('/grades/new-user', methods=['GET'])
 def form_insert_get_user():
-    return render_template('new-user.html', title='New User Form')
+    if not session.get('logged_in'):
+        return render_template('login.html')
+    if session.get('logged_in'):
+        return render_template('new-user.html', title='New User Form')
 
+#updating new user information to database using POST method
 @app.route('/grades/new-user', methods=['POST'])
 def form_insert_post_user():
     cursor = mysql.get_db().cursor()
@@ -148,5 +180,17 @@ def form_insert_post_user():
     mysql.get_db().commit()
     return redirect("/", code=302)
 
+#logout of the session:
+@app.route("/grades/logout")
+def logout():
+    session['logged_in'] = False
+    return homepage()
+
+# @app.route('/grades/login', methods=['GET'])
+# def form_insert_get_login():
+#     return render_template('login.html', title='Login')
+
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    app.secret_key = os.urandom(12)
+    app.run(host='0.0.0.0', debug=True)
+
