@@ -28,6 +28,18 @@ service.
         based on user's choice.
         * This process also has email feature for each attempt of user login or signup.
         
+        * (Self reminder to update this section)
+            * Login = ✅
+            * Logout = ✅
+            * New User registration form = ✅
+            * New User Email authorization with Code = ✅
+            * New User Email Auth code check with database = ✅
+            * On success check =✅
+            * On failed auth code entry removal = ✅
+            
+        * Create PDF/Word doc for site walk through (with screenshots)
+        * Description of the project functionality in words
+ 
         
         
       
