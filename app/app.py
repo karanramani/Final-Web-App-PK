@@ -5,6 +5,9 @@ from flask import render_template
 from flaskext.mysql import MySQL
 from pymysql.cursors import DictCursor
 from flask import Flask, flash, redirect, session, abort
+from flask_mail import Mail, Message
+from random import *
+
 import os
 
 app = Flask(__name__)
@@ -24,7 +27,6 @@ mysql.init_app(app)
 #     cursor.execute('SELECT * FROM grades')
 #     result = cursor.fetchall()
 #     return render_template('index.html', title='Home', user=user, grades=result)
-
 
 @app.route('/view/<int:grades_id>', methods=['GET'])
 def record_view(grades_id):
@@ -138,8 +140,8 @@ def api_delete(grades_id) -> str:
     return resp
 
 # Final Assignment features *Karan Ramani*
-# Login sessions
 
+# Login sessions
 #Below code makes login required to access the main page of the site
 @app.route('/')
 def homepage():
@@ -171,31 +173,61 @@ def do_admin_login():
 #new user creation session
 @app.route('/grades/new-user', methods=['GET'])
 def form_insert_get_user():
-    if not session.get('logged_in'):
-        return render_template('login.html')
-    if session.get('logged_in'):
-        return render_template('new-user.html', title='New User Form')
+    return render_template('new-user.html', title='New User Form')
 
-#updating new user information to database using POST method
-@app.route('/grades/new-user', methods=['POST'])
-def form_insert_post_user():
+@app.route('/grades/verification', methods=["POST"])
+def verification():
+    #Mail Functions with new user created sessions (Sending code to verify):
+    code = randint(000000, 999999)
+    app.config['DEBUG'] = True
+    app.config['TESTING'] = False
+    app.config["MAIL_SERVER"]= 'smtp.sendgrid.net'
+    app.config["MAIL_PORT"] = 465
+    app.config["MAIL_USERNAME"] = 'apikey'
+    app.config['MAIL_PASSWORD'] = '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'
+    app.config['MAIL_USE_TLS'] = False
+    app.config['MAIL_USE_SSL'] = True
+    app.config['MAIL_DEBUG'] = True
+
+    mail = Mail(app)
+    email = request.form["email"]
+    msg = Message('Verification Code', sender='projectflask7@gmail.com', recipients= [email])
+    msg.body = str(code)
+    mail.send(msg)
     cursor = mysql.get_db().cursor()
     inputData = (
-    request.form.get('Fname'), request.form.get('Lname'), request.form.get('username'), request.form.get('password'), request.form.get('email'))
+        request.form.get('Fname'), request.form.get('Lname'), request.form.get('username'),
+        request.form.get('password'), request.form.get('email'))
     sql_insert_query = """INSERT INTO login (firstname, lastname, username, password, email) VALUES (%s, %s,%s, %s, %s) """
     cursor.execute(sql_insert_query, inputData)
+    #updating verification code to database entry
+    cursor.execute('UPDATE login SET verification_code = %s WHERE email = %s', (code, email))
     mysql.get_db().commit()
-    return redirect("/", code=302)
+    return render_template('verification.html')
+
+#updating new user information to database using POST method (If Above verification is verified)
+
+@app.route('/grades/user-access', methods=['POST'])
+def validate_real_user():
+    # new_user = email
+    user_code = request.form['verify-code']
+    cursor = mysql.get_db().cursor()
+    cursor.execute('SELECT * FROM login WHERE verification_code = %s', (user_code))
+    validation = cursor.fetchone()
+    if validation:
+        return redirect("/", code=302)
+    else:
+        flash('Please try again')
+        cursor = mysql.get_db().cursor()
+        cursor.execute('DELETE FROM login ORDER BY `id` DESC LIMIT 1')
+        mysql.get_db().commit()
+        return redirect("/grades/new-user", code=302)
 
 #logout of the session:
 @app.route("/grades/logout")
 def logout():
     session['logged_in'] = False
     return homepage()
-
-# @app.route('/grades/login', methods=['GET'])
-# def form_insert_get_login():
-#     return render_template('login.html', title='Login')
 
 if __name__ == '__main__':
     app.secret_key = os.urandom(12)

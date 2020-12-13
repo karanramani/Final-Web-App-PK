@@ -39,8 +39,9 @@ CREATE TABLE IF NOT EXISTS login (
     `email` VARCHAR(50) UNIQUE,
     `username` VARCHAR(50) UNIQUE,
     `password` VARCHAR(50),
+    `verification_code` int,
     primary key (`id`)
 );
 
-INSERT INTO login (firstname, lastname, email, username, password) VALUES ('Super', 'User','ramanikaran@gmail.com', 'admin','password'),
-                                                                   ('Karan','Ramani','kjr27@njit.edu','karanramani', 'password');
+INSERT INTO login (firstname, lastname, email, username, password, verification_code) VALUES ('Super', 'User','ramanikaran@gmail.com', 'admin','password', 123456),
+                                                                   ('Karan','Ramani','kjr27@njit.edu','karanramani', 'password', 565188);
