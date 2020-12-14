@@ -2,3 +2,4 @@ Flask
 flask-mysql
 simplejson
 mysql-connector
+flask-mail
