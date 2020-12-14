@@ -6,11 +6,11 @@ CREATE TABLE IF NOT EXISTS grades (
     `Last_name` VARCHAR(9) CHARACTER SET utf8,
     `First_name` VARCHAR(16) CHARACTER SET utf8,
     `SSN` VARCHAR(21) CHARACTER SET utf8,
-    `Test1` NUMERIC(4, 1),
-    `Test2` NUMERIC(4, 1),
+    `Test1` VARCHAR(14) CHARACTER SET utf8,
+    `Test2` NUMERIC(3, 1),
     `Test3` NUMERIC(4, 1),
-    `Test4` NUMERIC(4, 1),
-    `Final` NUMERIC(4, 1),
+    `Test4` NUMERIC(3, 1),
+    `Final` VARCHAR(8) CHARACTER SET utf8,
     `Grade` VARCHAR(7) CHARACTER SET utf8,
     primary key (id)
 );
@@ -31,3 +31,17 @@ INSERT INTO grades (Last_name, First_name, SSN, Test1, Test2, Test3, Test4, Fina
 ('Franklin','Benny','234-56-2890',50.0,1.0,90.0,80.0,90.0,'B-'),
 ('George','Boy','345-67-3901',40.0,1.0,11.0,-1.0,4.0,'B'),
 ('Heffalump','Harvey','632-79-9439',30.0,1.0,20.0,30.0,40.0,'C');
+
+CREATE TABLE IF NOT EXISTS login (
+    `id` int auto_increment,
+    `firstname` VARCHAR(50),
+    `lastname` VARCHAR(50),
+    `email` VARCHAR(50) UNIQUE,
+    `username` VARCHAR(50) UNIQUE,
+    `password` VARCHAR(50),
+    `verification_code` int,
+    primary key (`id`)
+);
+
+INSERT INTO login (firstname, lastname, email, username, password, verification_code) VALUES ('Super', 'User','ramanikaran@gmail.com', 'admin','password', 123456),
+                                                                   ('Karan','Ramani','kjr27@njit.edu','karanramani', 'password', 565188);
