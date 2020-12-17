@@ -76,15 +76,15 @@ def verification():
     app.config['TESTING'] = False
     app.config["MAIL_SERVER"]= 'smtp.sendgrid.net'
     app.config["MAIL_PORT"] = 465
-    app.config["MAIL_USERNAME"] = 'apikey'
-    app.config['MAIL_PASSWORD'] = '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'
+    app.config["MAIL_USERNAME"] = os.environ.get('MAIL_USERNAME')
+    app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
     app.config['MAIL_USE_TLS'] = False
     app.config['MAIL_USE_SSL'] = True
     app.config['MAIL_DEBUG'] = True
 
     mail = Mail(app)
     email = request.form["email"]
-    msg = Message('Verification Code', sender='projectflask7@gmail.com', recipients= [email])
+    msg = Message('Verification Code', sender='karanramani1994@gmail.com', recipients= [email])
     msg.body = str(code)
     mail.send(msg)
     cursor = mysql.get_db().cursor()
