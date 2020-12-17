@@ -81,10 +81,11 @@ def verification():
     app.config['MAIL_USE_TLS'] = False
     app.config['MAIL_USE_SSL'] = True
     app.config['MAIL_DEBUG'] = True
+    app.config['MAIL_DEFAULT_SENDER'] = os.environ.get('MAIL_DEFAULT_SENDER')
 
     mail = Mail(app)
     email = request.form["email"]
-    msg = Message('Verification Code', sender='karanramani1994@gmail.com', recipients= [email])
+    msg = Message('Verification Code', recipients= [email])
     msg.body = str(code)
     mail.send(msg)
     cursor = mysql.get_db().cursor()
