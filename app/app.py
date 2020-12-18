@@ -72,20 +72,16 @@ def form_insert_get_user():
 def verification():
     #Mail Functions with new user created sessions (Sending code to verify):
     code = randint(000000, 999999)
-    app.config['DEBUG'] = True
-    app.config['TESTING'] = False
-    app.config["MAIL_SERVER"]= 'smtp.sendgrid.net'
-    app.config["MAIL_PORT"] = 465
-    app.config["MAIL_USERNAME"] = os.environ.get('MAIL_USERNAME')
-    app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
+    app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+    app.config['MAIL_PORT'] = 465
+    app.config['MAIL_USERNAME'] = 'projectflask7@gmail.com'
+    # app.config['MAIL_PASSWORD'] =
     app.config['MAIL_USE_TLS'] = False
     app.config['MAIL_USE_SSL'] = True
-    app.config['MAIL_DEBUG'] = True
-    app.config['MAIL_DEFAULT_SENDER'] = os.environ.get('MAIL_DEFAULT_SENDER')
 
     mail = Mail(app)
     email = request.form["email"]
-    msg = Message('Verification Code', recipients= [email])
+    msg = Message('Verification Code', sender= "projectflask7@gmail.com", recipients= [email])
     msg.body = str(code)
     mail.send(msg)
     cursor = mysql.get_db().cursor()
