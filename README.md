@@ -28,7 +28,7 @@ service.
         based on user's choice.
         * This process also has email feature for each attempt of user login or signup.
         
-        * (Self reminder to update this section)
+        * Functionalities: 
             * Login = ✅
             * Logout = ✅
             * New User registration form = ✅
@@ -37,9 +37,9 @@ service.
             * On success check =✅
             * On failed auth code entry removal = ✅
             
-        * Create PDF/Word doc for site walk through (with screenshots)
-        * Description of the project functionality in words
- 
+        * [Click here to view project Screenshots](Final_Project.pdf)
+        * This function covers the above listed functionalities of ensuring that the user of the site is logged in with a session. It also then has function to securely log out of the session. 
+        ## Please see Canvas submission comment for mail app testing purpose. Email password is included to attach on downloaded code (Paste on Line 78 of app.py file) 
         
         
       
