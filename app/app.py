@@ -2,10 +2,11 @@ from typing import List, Dict
 import simplejson as json
 from flask import request, Response, redirect
 from flask import render_template
+from flask_mail import Mail
 from flaskext.mysql import MySQL
 from pymysql.cursors import DictCursor
 from flask import Flask, flash, redirect, session, abort
-from Flask-Mail import Mail, Message
+from flask_mail import Mail, Message
 from random import *
 
 import os
@@ -15,21 +16,21 @@ mysql = MySQL(cursorclass=DictCursor)
 
 # Karan's docker enebled database credentials
 
-# app.config['MYSQL_DATABASE_HOST'] = 'db'
-# app.config['MYSQL_DATABASE_USER'] = 'root'
-# app.config['MYSQL_DATABASE_PASSWORD'] = 'root'
-# app.config['MYSQL_DATABASE_PORT'] = 3306
-# app.config['MYSQL_DATABASE_DB'] = 'gradesDataFinal'
-# mysql.init_app(app)
-
-# Priyesha's non-docker database credentials
-
-app.config['MYSQL_DATABASE_HOST'] = 'localhost'
+app.config['MYSQL_DATABASE_HOST'] = 'db'
 app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'Nj1T531153@!'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'root'
 app.config['MYSQL_DATABASE_PORT'] = 3306
 app.config['MYSQL_DATABASE_DB'] = 'gradesDataFinal'
 mysql.init_app(app)
+
+# Priyesha's non-docker database credentials
+
+# app.config['MYSQL_DATABASE_HOST'] = 'localhost'
+# app.config['MYSQL_DATABASE_USER'] = 'root'
+# app.config['MYSQL_DATABASE_PASSWORD'] = 'Nj1T531153@!'
+# app.config['MYSQL_DATABASE_PORT'] = 3306
+# app.config['MYSQL_DATABASE_DB'] = 'gradesDataFinal'
+# mysql.init_app(app)
 
 # Final Assignment features *Karan Ramani*
     #Login, sigup with email verification and account logged in status check
