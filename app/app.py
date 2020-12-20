@@ -5,7 +5,7 @@ from flask import render_template
 from flaskext.mysql import MySQL
 from pymysql.cursors import DictCursor
 from flask import Flask, flash, redirect, session, abort
-from flask_mail import Mail, Message
+from Flask-Mail import Mail, Message
 from random import *
 
 import os
