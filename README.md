@@ -40,6 +40,12 @@ service.
         * [Click here to view project Screenshots](Final_Project.pdf)
         * This function covers the above listed functionalities of ensuring that the user of the site is logged in with a session. It also then has function to securely log out of the session. 
         ## Please see Canvas submission comment for mail app testing purpose. Email password is included to attach on downloaded code (Paste on Line 78 of app.py file) 
+
+### Feature: Calendar API By Priyesha Baxi
+* Successfully included Events DB(which goes with calendar feature)
+* Successfully installed client_secret json file
+* Sucessfully included tab fo calendar
+* Grades Data sucessfully running on both end
         
         
       

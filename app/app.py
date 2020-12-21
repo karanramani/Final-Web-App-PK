@@ -2,6 +2,7 @@ from typing import List, Dict
 import simplejson as json
 from flask import request, Response, redirect
 from flask import render_template
+from flask_mail import Mail
 from flaskext.mysql import MySQL
 from pymysql.cursors import DictCursor
 from flask import Flask, flash, redirect, session, abort
@@ -242,4 +243,3 @@ def api_delete(grades_id) -> str:
 if __name__ == '__main__':
     app.secret_key = os.urandom(12)
     app.run(host='0.0.0.0', debug=True)
-
