@@ -47,14 +47,14 @@ INSERT INTO login (firstname, lastname, email, username, password, verification_
                                                                    ('Karan','Ramani','kjr27@njit.edu','karanramani', 'password', 565188);
 
 
-CREATE TABLE IF NOT EXISTS events (
-    `id` int auto_increment,
-    `name` varchar(255) NOT NULL,
-    `event` varchar(255) NOT NULL,
-    `dayweek` VARCHAR(50) NOT NULL,
-    `start_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    `end_date` timestamp NOT NULL,
-    primary key (id)
-);
-INSERT INTO events (name, event, dayweek, start_date, end_date) VALUES
-('sam','HappyHour','Wed','2020-12-16 12:00:00','2020-12-16 13:00:00');
+# CREATE TABLE IF NOT EXISTS events (
+#     `id` int auto_increment,
+#     `name` varchar(255) NOT NULL,
+#     `event` varchar(255) NOT NULL,
+#     `dayweek` VARCHAR(50) NOT NULL,
+#     `start_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+#     `end_date` timestamp NOT NULL,
+#     primary key (id)
+# );
+# INSERT INTO events (name, event, dayweek, start_date, end_date) VALUES
+# ('sam','HappyHour','Wed','2020-12-16 12:00:00','2020-12-16 13:00:00');
